@@ -1,0 +1,166 @@
+a>+/16.!46
+# ======================================================================
+# simple music scripting
+# 	- generate standard midi file
+#  	- inspired by abc notation format
+# ======================================================================
+#
+# header command				name will be file name too
+# ----------------------------------------------------------------------
+#	H: 		header definitions 	name bpm=x ppqn=x bar=x/x len=x/x
+#
+# 	name: 	name_of_song, 								default: SMS
+#   bpm:	tempo in beats (quarter notes) per minute   default: 120
+#           [0 - 255]
+#   ppqn:   pulse per quarter note 						default: 96
+#			[24, 48, 96, 192, 384, 768]
+#   bar:	bar, time signature 						default: 4/4
+#			[2-6]/[2-8]
+#   len:    length of standard note						default: 1/4
+#			[1/[1,2,4,8,16,32,64]]
+#
+# track commands				name will be a new command
+# ----------------------------------------------------------------------
+#	I:		instrument			name chn=x bnk=x prg=x vol=x oct=x
+#	D:	    drum				name chn=x bnk=x prg=x vol=x drn=x
+#         						chn			[0-15]		default: 0
+#         						bnk/prg/vol	[0-127]		default: 0 / 0 / 127
+#         						oct			[-2 - +8]	default: 3
+#         						drn			[0-127]	
+#
+# variables commands				name will be a new command
+# ----------------------------------------------------------------------
+# 	M:		midi controller: 		name status data1 data2
+#
+# 	X:		sysex string: 			name bytelist
+#
+# 	C:		chord as notelist:		name note1 ... note9
+#         	only with halftone
+#			and octave qualifier
+#
+# 	A:		arpreggio of chord:		name chordnote1 ... 			
+#           optional with
+#			duration and 
+#			volume qualifier
+#
+# 	S:		sequence as notelist:	name note ...
+#         	like as a macro
+#
+# block command						name will be a new command
+# ----------------------------------------------------------------------
+# 	[ ... ]	synchron play			name
+#									TRACK 
+#									TRACK									
+#
+#
+# note, qualifier, miscellaneous commands 
+# ----------------------------------------------------------------------
+# notes: 
+#	a b c d e f g   x o			- note value [a-g]
+#                                 drum 		 [x]
+#	                              pause 	 [o]
+#
+# qualifier:
+# 	halfton 	+				- pitch half tone up   (# sign)
+# 		  		- 				- pitch half tone down (b sign)
+# 	octave	   	>				- pitch octave up
+# 		   		<				- pitch octave down
+# 	duration	.				- current duration +50%
+# 	  		 	*xx				- duration factor of standard note time
+#                                    xx: 2,4,8,16,32
+# 		   	   	/xx				- duration divisor of standard note time
+#                                    xx: 2,4,8,16,32
+# 	volume		%xx				- volume in percent of track volume
+#                                    xx: 0-100 
+# 
+# miscellaneous:
+#	# 			    ->					- comment line
+# 	bar				-> |				- define start/end of bar inside track
+# 	group time		-> ( n1 n2  ... )	- notes begin at the same start time
+# 	chord link		-> ~				- chord linked with arpreggio
+#                                     	  e.g. Am~arp1
+# 	assignment		-> =				- value assignment
+#                                         e.g. chn=10
+#
+# general rules
+# ----------------------------------------------------------------------
+#  	- empty lines are allowed
+#  	- comments only for full lines
+#	- every line begins with a 
+# 			- comment or
+# 			- command or
+# 			- TRACK or
+#			- GROUP (start and end)
+#     continue with parameters and ends with a new line
+# 	- all things are a word (in context of command type),
+#     separators are space or tab
+#	- the number format is always decimal
+# 	- note and there qualifiers are one word without separators,
+#  	  all qualifiers are optional
+#	- all used names have to be unique
+#  	- chord defines only used notes of chord (max. 9 notes)
+# 	- arpreggio defines the play order of chord notes,
+#     optional duration and volume qualifier
+#   - to use chord with arpreggio the chord must have linked with arpreggio
+# 	- a sequence can only fill with notes incl. qualifiers
+#   - the size of arpreggio or sequence must have a multiple of bar
+# 	- a track can fill with
+#             notes,
+#             sequences,
+#             chord~arpreggio
+#	- tracks can time bundled bundled with [ ... ] to play together 
+#	- all tracks will be compiled to a midi file
+#
+# ======================================================================
+#
+# example script with 4 bars of music in 2 blocks
+# ----------------------------------------------------------------------
+
+# header define
+# ----------------------------------------------------------------------
+H:	Name_of_Song bpm=120 ppqn=96 bar=4/4 snl=1/4
+
+# track define
+# ----------------------------------------------------------------------
+I: Piano 	chn=10 bnk=2  prg=3  vol=127 oct=3
+I: Guitar   chn=2  bnk=0  prg=87 vol=127 oct=5
+D: HH		chn=11 bnk=12 prg=13 vol=100 drn=15
+
+# midi define 
+# ----------------------------------------------------------------------
+M: ctrlTest 1 2 3
+X: sysex1 a b c d e f
+
+# chord and arpreggio define
+# ----------------------------------------------------------------------
+C: Cmaj c> e> g>
+A: Arp1	| ( 1%80 2. 3+ ) |
+A: Arp2	| ( 1 2 3 ) |
+
+# sequence define
+# ----------------------------------------------------------------------
+S: Phrase1 | a>+*2%80	| a>	|
+
+
+# ------------- blocks
+#
+[ intro1
+# 	bar   	1           2
+	Piano	|        Phrase1        | 
+	Guitar	| Cmaj~Arp1	| Cmaj~Arp1 |
+	HH      | x o x o	| o x o x	|
+]
+
+[ intro2
+#  	bar  	3           4
+	Piano	| a>+*2%50	| a         |
+	Guitar	| Cmaj~Arp2	| Cmaj~Arp1	| 
+	HH      | o x o x	| x o x o	| 
+]
+
+
+Piano	| a>+*2%50	| a        |
+intro1 
+intro2
+
+# ---ENDE---
