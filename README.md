@@ -2,9 +2,9 @@ FmSynth ...
 
 - ... by ma.ke. 2021
 - ... is a hobby project with no warrenty
-      - use at your own risk
-      - do what ever you want with this
-      - be happy ;-)
+- ... use at your own risk
+- ... do what ever you want with this
+- ... be happy ;-)
 
 ![FmSynth](/fmsynth.GIF)
 	  
