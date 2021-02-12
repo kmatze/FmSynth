@@ -23,16 +23,15 @@ FmSynth ...
 
 - MIDI implementation: 
 	- channel messages:
-		- NOTEOFF	0x8
-		- NOTEON 	0x9
-		- CTRLCHG	0xB
+		- NOTEOFF       0x8
+		- NOTEON        0x9
+		- CTRLCHG       0xB
 		- CC_VOL          7
-		- CC_BAL	  8 -----+ 
-		                         |--- BAL = PAN = BAL
-		- CC_PAN	 10 -----+
-		- CC_DELAY	 91
-		- PRGCHG	0xC
-		- PITCHBEND	0xE
+		- CC_BAL          8 (same as pan)
+		- CC_PAN         10 (same as balance)
+		- CC_DELAY       91
+		- PRGCHG        0xC
+		- PITCHBEND     0xE
 	- internal instrument (soundblaster timbre with 16 bytes) for midi channel can set with PRGCHG
 	- system exclusive for modify midi channel instrument
 		- one voice parameter per sysex msg or 
