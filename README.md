@@ -82,7 +82,7 @@ FmSynth ...
 	  see directory instruments or unzip instruments.zip
 	- documentation see directory doc
 	- sample midi files in directory smf
-	- sample rendered file ![FmSynth](/Hier_kommt_Alex.mp3)
+	- sample rendered file "Hier_kommt_Alex.mp3"
 
 **todo:**
 
