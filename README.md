@@ -10,7 +10,7 @@ FmSynth ...
 	  
 **core features FMSYNTH:**
 - fmsynth.c / fmsynth.h in directory fmsynth
-- library to use adlibemu (Ken Silverman) as midi synth on **windows**
+	- library to use adlibemu (Ken Silverman) as midi synth on **windows**
 - adlibemu can use as voice or midi synthesizer
 - voice: 9 voices, provide complete register writing (drum mode not implented)
 - midi : dynamic voice handling to use 16 midichannels
@@ -23,20 +23,20 @@ FmSynth ...
 
 - MIDI implementation: 
 	- channel messages:
-		NOTEOFF 			0x8
-		NOTEON 				0x9
-		CTRLCHG				0xB
-		CC_VOL            	  7
-		CC_BAL			      8 -----+ 
-		                             |--- BAL = PAN = BAL
-		CC_PAN			     10 -----+
-		CC_DELAY		     91
-		PRGCHG				0xC
-		PITCHBEND			0xE
+		- NOTEOFF	0x8
+		- NOTEON 	0x9
+		- CTRLCHG	0xB
+		- CC_VOL          7
+		- CC_BAL	  8 -----+ 
+		                         |--- BAL = PAN = BAL
+		- CC_PAN	 10 -----+
+		- CC_DELAY	 91
+		- PRGCHG	0xC
+		- PITCHBEND	0xE
 	- internal instrument (soundblaster timbre with 16 bytes) for midi channel can set with PRGCHG
 	- system exclusive for modify midi channel instrument
-	- one voice parameter per sysex msg or 
-	- complete voicedata  per sysex msg 
+		- one voice parameter per sysex msg or 
+		- complete voicedata  per sysex msg 
 
 - C-API (well documented, see source code fmsynth.c and fmsynth.h)
 	- API WINDOWS 	audio
@@ -45,23 +45,22 @@ FmSynth ...
 	- API FMSYNTH 	sound patches
 	
 - **bonus:** 
-	- collection of instrument and bank files I've found over the internet, see directory instruments
+	- collection of instrument and bank files I've found over the internet
+	  see directory instruments or unzip instruments.zip
 	- documentation see directory doc
 
 **extended features - MIDI:**
 - mkMidi.c / mkMidi.h in directory mkmidi
-- library to create and play midifile (type 0, 1) on **windows** midi devices,  
-- specially: use internal fmsynth (adlibemu) to play or render to wave file
- 	- without warranty
-
+	- library to create and play midifile (type 0, 1) on **windows** midi devices,  
+	- specially: use internal fmsynth (adlibemu) to play or render to wave file
 - create, save, load and play midifile type 0 or 1
-- render midi file through fmsynth to wav file 
+- render midi file through fmsynth to a wav file 
 - provide running mode by reading midi file
 - complete channel messages
 - meta event tempo
 - sysex data (F0 ... data ... F7)
-- midi output interface or internal fmsynth (adlibemu) inkl. sysex
-- midi input interface (WIP)
+- provide midi output interface or internal fmsynth (adlibemu) inkl. sysex
+- provide midi input interface (WIP)
 
 - limitations:
 	- time devision only ppqn
@@ -69,9 +68,11 @@ FmSynth ...
 	- sysex request not supported
 
 **extended features - TCL/TK:**
-- mk.c         -> wrapper library to use mkMidi.c to create and play midifile (type 0, 1)
-                  on **windows** midi devices, specially: fmsynth (adlibemu)
-- fmsynth.tcl  -> GUI for FMSYNTH
+- mk.c         
+	- wrapper library to use mkMidi.c to create and play midifile (type 0, 1)
+          on **windows** midi devices, specially: fmsynth (adlibemu)
+- fmsynth.tcl 
+	- GUI for FMSYNTH
 
 - commands:
 	- mk::help     view this help
