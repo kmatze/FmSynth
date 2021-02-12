@@ -43,11 +43,6 @@ FmSynth ...
 	- API FMSYNTH 	midi support
 	- API FMSYNTH 	sound patches
 	
-- **bonus:** 
-	- collection of instrument and bank files I've found over the internet
-	  see directory instruments or unzip instruments.zip
-	- documentation see directory doc
-
 **extended features - MIDI:**
 - mkMidi.c / mkMidi.h in directory mkmidi
 	- library to create and play midifile (type 0, 1) on **windows** midi devices,  
@@ -68,19 +63,25 @@ FmSynth ...
 
 **extended features - TCL/TK:**
 - mk.c         
-	- wrapper library to use mkMidi.c to create and play midifile (type 0, 1)
-          on **windows** midi devices, specially: fmsynth (adlibemu)
+	- wrapper library to use mkMidi.c to create and play midifile (type 0, 1) on **windows** midi devices
+	- specially: fmsynth (adlibemu)
+	
 - fmsynth.tcl 
 	- GUI for FMSYNTH
-
+	
 - commands:
 	- mk::help     view this help
 	- mk::list     get device list
 	- mk::open     open device -> get new cmd for midi device or fmsynth 
 	- mk::track    create and processing midi tracks -> get new command
 	- mk::play     play / render midi file
-
 	- every command can show help informations: cmd ?
+	
+- **bonus:** 
+	- collection of instrument and bank files I've found over the internet
+	  see directory instruments or unzip instruments.zip
+	- documentation see directory doc
+	- sample midi files in directory smf
 
 **todo:**
 
